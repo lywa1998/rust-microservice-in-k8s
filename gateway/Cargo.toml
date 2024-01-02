@@ -6,4 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+api ={ version = "0.1.0", path = "../api" }
+async_once = "0.2.6"
+lazy_static = "1.4.0"
+prost = "0.12.3"
 salvo = "0.63.1"
+tokio = { version = "1.35.1", features = ["full"] }
+tonic = "0.10.2"

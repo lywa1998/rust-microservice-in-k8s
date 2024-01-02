@@ -1,11 +1,13 @@
 [package]
-name = "service2"
+name = "api"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-api = { version = "0.1.0", path = "../api" }
-tokio = { version = "1.35.1", features = ["full"] }
+prost = "0.12.3"
 tonic = "0.10.2"
+
+[build-dependencies]
+tonic-build = "0.10.2"

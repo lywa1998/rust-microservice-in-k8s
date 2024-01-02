@@ -1,5 +1,7 @@
 [workspace]
 resolver = "2"
-members = [
-    "gateway"
-, "service1", "service2"]
+members = [ "api",
+    "gateway", 
+    "service1", 
+    "service2"
+]
