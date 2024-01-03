@@ -1,0 +1,49 @@
+[tasks.default]
+alias = "build-containers"
+
+# Overrides the default build task
+[tasks.build]
+alias = "build-containers"
+
+[tasks.build-gateway]
+workspace = false
+script = '''
+docker build --rm --target gateway .
+docker tag $(docker image ls -q --filter=label=service=gateway) workspace-gateway
+'''
+
+[tasks.build-service1]
+workspace = false
+script = """
+docker build --rm --target service1 .
+docker tag $(docker image ls -q --filter=label=service=service1) workspace-service1
+"""
+
+[tasks.build-service2]
+workspace = false
+script = """
+docker build --rm --target service2 .
+docker tag $(docker image ls -q --filter=label=service=service2) workspace-service2
+"""
+
+[tasks.build-containers]
+workspace = false
+dependencies = [
+    "build-gateway",
+    "build-service1",
+    "build-service2",
+]
+
+[tasks.push-containers]
+workspace = false
+script = '''
+echo "Implementing docker push is left as an exercise for the reader."
+'''
+
+[tasks.delete-containers]
+workspace = false
+script = '''
+docker image rm $(docker image ls -q --filter=label=service=gateway)
+docker image rm $(docker image ls -q --filter=label=service=service1)
+docker image rm $(docker image ls -q --filter=label=service=service2)
+'''
