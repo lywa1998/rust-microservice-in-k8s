@@ -21,7 +21,7 @@ async fn echo(req: &mut Request, resp: &mut Response) {
         }
     };
 
-    let mut client = EchoServiceClient::connect("http://127.0.0.1:8001").await.unwrap();
+    let mut client = EchoServiceClient::connect("http://service1:8001").await.unwrap();
     let echo_response = client.echo_from_service1(echo_requst).await.unwrap();
     resp.render(Text::Plain(echo_response.into_inner().message))
 }
@@ -35,6 +35,6 @@ async fn main() {
                 .post(echo)
         );
     println!("{router:#?}");
-    let acceptor = TcpListener::new("127.0.0.1:8000").bind().await;
+    let acceptor = TcpListener::new("[::0]:8000").bind().await;
     Server::new(acceptor).serve(router).await;
 }

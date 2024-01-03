@@ -28,7 +28,7 @@ impl EchoService for EchoImplement {
 
 #[tokio::main]
 async fn main() {
-    let addr = "127.0.0.1:8002".parse().unwrap();
+    let addr = "[::0]:8002".parse().unwrap();
     let greeter = EchoImplement;
 
     println!("GreeterServer listening on {}", addr);

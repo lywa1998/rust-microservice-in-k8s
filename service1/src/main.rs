@@ -13,7 +13,7 @@ impl EchoService for EchoImplement {
     ) ->  Result<Response<EchoResponse>, Status> {
         println!("Got a request from {:?}", request.remote_addr());
 
-        let mut client = EchoServiceClient::connect("http://127.0.0.1:8002").await.unwrap();
+        let mut client = EchoServiceClient::connect("http://service2:8002").await.unwrap();
 
         let response = client.echo_from_service2(request).await.unwrap();
         
@@ -34,7 +34,7 @@ impl EchoService for EchoImplement {
 
 #[tokio::main]
 async fn main() {
-    let addr = "127.0.0.1:8001".parse().unwrap();
+    let addr = "[::0]:8001".parse().unwrap();
     let greeter = EchoImplement;
 
     println!("GreeterServer listening on {}", addr);
