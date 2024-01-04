@@ -1,5 +1,8 @@
+use anyhow::Ok;
 use salvo::prelude::*;
 use api::{EchoRequest, EchoResponse, echo_service_client::EchoServiceClient};
+
+mod error;
 
 #[handler]
 async fn hello() -> &'static str{
@@ -8,27 +11,20 @@ async fn hello() -> &'static str{
 
 #[handler]
 async fn echo(req: &mut Request, resp: &mut Response) {
-    let message = req.form::<String>("message").await;
+    let message = req.form::<String>("message").await.unwrap();
     println!("gateway get request {:?}", message);
 
-    let echo_requst = match message {
-        Some(message) => {
-            EchoRequest { message }
-        }
-        None => {
-            resp.render(Text::Plain("echo: no message post"));
-            return;
-        }
-    };
+    let echo_requst = EchoRequest { message };
 
     let mut client = EchoServiceClient::connect("http://service1:8001").await.unwrap();
     let echo_response = client.echo_from_service1(echo_requst).await.unwrap();
-    resp.render(Text::Plain(echo_response.into_inner().message))
+    resp.render(Text::Plain(echo_response.into_inner().message));
 }
 
 #[tokio::main]
 async fn main() {
     let router = Router::new()
+        .hoop(CatchPanic::new())
         .get(hello)
         .push(
             Router::with_path("echo")

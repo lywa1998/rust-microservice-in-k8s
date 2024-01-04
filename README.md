@@ -33,7 +33,7 @@ curl -X POST -d 'message=ABC' localhost:8000/echo
 - [x] docker build
 - [x] docker compose
 - [x] k8s environment
-- [ ] deploying microservice in k8s
+- [x] deploying microservice in k8s
 - [ ] CI/CD
 - [ ] write doc
 

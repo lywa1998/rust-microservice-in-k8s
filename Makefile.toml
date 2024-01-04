@@ -37,7 +37,7 @@ dependencies = [
 [tasks.push-containers]
 workspace = false
 script = '''
-echo "Implementing docker push is left as an exercise for the reader."
+docker image push 
 '''
 
 [tasks.delete-containers]
